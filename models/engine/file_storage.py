@@ -2,6 +2,7 @@
 import json
 import os
 
+
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
@@ -10,7 +11,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        key = "{}.{}".format(type(obj).__name__, str(obj.id))
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
@@ -22,5 +23,10 @@ class FileStorage:
 
     def reload(self):
         if os.path.exists(FileStorage.__file_path):
+            tmp_dict = {}
             with open(FileStorage.__file_path, 'r') as file:
-                FileStorage.__objects = json.load(file)
+                tmp_dict = json.load(file)
+            from models.base_model import BaseModel
+            for key, value in tmp_dict.items():
+                instance = BaseModel(**value)
+                FileStorage.__objects[key] = instance
