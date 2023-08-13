@@ -74,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """
-        Prints the string representation of an instance based on the class name and id
+        Prints string representation of instance based on the class name and id
 
         Usage: show <object> <id>
         """
@@ -115,8 +115,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """
-        Prints all string representation of all instances based or not on the class name.
-        
+        Print string representation of instances based or not on the class name
+
         Usage: all <object> | all
         """
         args = line.split()
@@ -131,10 +131,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """
-        Updates an instance based on the class name and id by adding or updating attribute then saves it
+        Updates an instance based on the class name and id
 
         Usage: update <class name> <id> <attribute name> <attribute value>
-        """  
+        """
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
@@ -150,6 +150,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** attribute name missing **")
             elif len(args) < 4:
                 print("** value missing **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
