@@ -1,20 +1,38 @@
 #!/usr/bin/python3
+"""
+Defines a class filestorage for data serialization and deserialization
+"""
 import json
 import os
 
 
 class FileStorage:
+    """
+    Represents the class Filestorage for serialization and deserialization
+    """
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """
+        Returns the dictionary of __objects
+        """
         return FileStorage.__objects
 
     def new(self, obj):
+        """
+        Adds an object to the dictionary
+
+        Args:
+            obj (object): Object to be added.
+        """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
+        """
+        Save the dictionary __objects to a file
+        """
         tmp_dict = {}
         for key in FileStorage.__objects:
             tmp_dict[key] = FileStorage.__objects[key].to_dict()
@@ -22,6 +40,9 @@ class FileStorage:
             json.dump(tmp_dict, file)
 
     def reload(self):
+        """
+        Reload the dictionary from saved file
+        """
         if os.path.exists(FileStorage.__file_path):
             tmp_dict = {}
             with open(FileStorage.__file_path, 'r') as file:

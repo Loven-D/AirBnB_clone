@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Creates a command interface for the user
+"""
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -12,23 +15,38 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    Implements the command interface for the user
+    """
     prompt = "(hbnb) "
-    classes = ["BaseModel"]
+    CLASSES = ["BaseModel"]
 
     def emptyline(self):
         """Do nothing when an emptyline is entered"""
         pass
 
     def do_quit(self, line):
-        """Quit command to exit the program"""
+        """
+        Quit command to exit the program
+
+        Usage: quit
+        """
         return True
 
     def do_EOF(self, line):
-        """ctrl+d to exit the program"""
+        """
+        Exits the program
+
+        Usage: CTRL + D
+        """
         return True
 
     def do_create(self, line):
-        """Creates a new instance of a class, saves it and prints the id"""
+        """
+        Creates a new instance of a class, saves it and prints the id
+
+        Usage create <object>
+        """
         if not line or line == "":
             print("** class name missing **")
         elif line not in HBNBCommand.classes:
@@ -52,7 +70,11 @@ class HBNBCommand(cmd.Cmd):
             print(instance.id)
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on the class name and id"""
+        """
+        Prints the string representation of an instance based on the class name and id
+
+        Usage: show <object> <id>
+        """
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
@@ -68,7 +90,11 @@ class HBNBCommand(cmd.Cmd):
                 print(storage.all()[key])
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id then saves it"""
+        """
+        Deletes an instance based on the class name and id then saves it
+
+        Usage: destroy <object> <id>
+        """
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
@@ -85,7 +111,11 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not on the class name."""
+        """
+        Prints all string representation of all instances based or not on the class name.
+        
+        Usage: all <object> | all
+        """
         args = line.split()
         data = storage.all()
         if line and line != "":
@@ -97,7 +127,11 @@ class HBNBCommand(cmd.Cmd):
             print([str])
 
     def do_update(self, line):
-        """Updates an instance based on the class name and id by adding or updating attribute then saves it"""  
+        """
+        Updates an instance based on the class name and id by adding or updating attribute then saves it
+
+        Usage: update <class name> <id> <attribute name> <attribute value>
+        """  
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
