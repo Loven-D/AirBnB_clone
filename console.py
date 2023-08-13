@@ -19,7 +19,10 @@ class HBNBCommand(cmd.Cmd):
     Implements the command interface for the user
     """
     prompt = "(hbnb) "
-    CLASSES = ["BaseModel"]
+    CLASSES = [
+            "BaseModel", "User", "State",
+            "Amenity", "Place", "City", "Review"
+            ]
 
     def emptyline(self):
         """Do nothing when an emptyline is entered"""
@@ -49,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not line or line == "":
             print("** class name missing **")
-        elif line not in HBNBCommand.classes:
+        elif line not in HBNBCommand.CLASSES:
             print("** class doesn't exist **")
         else:
             if line == "BaseModel":
@@ -78,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.CLASSES:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -98,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.CLASSES:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -119,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         data = storage.all()
         if line and line != "":
-            if args[0] not in HBNBCommand.classes:
+            if args[0] not in HBNBCommand.CLASSES:
                 print("** class doesn't exist **")
             else:
                 ins_list = []
@@ -135,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if not line or line == "":
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.CLASSES:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
