@@ -121,13 +121,19 @@ class HBNBCommand(cmd.Cmd):
         """
         args = line.split()
         data = storage.all()
+        ins_list = []
         if line and line != "":
             if args[0] not in HBNBCommand.CLASSES:
                 print("** class doesn't exist **")
             else:
-                ins_list = []
+                for key in data.keys():
+                    if key.split(".")[0] == args[0]:
+                        ins_list.append(str(data[key]))
+                print(ins_list)
         else:
-            print([str])
+            for key in data.keys():
+                ins_list.append(str(data[key]))
+            print(ins_list)
 
     def do_update(self, line):
         """
@@ -136,6 +142,7 @@ class HBNBCommand(cmd.Cmd):
         Usage: update <class name> <id> <attribute name> <attribute value>
         """
         args = line.split()
+        data = storage.all()
         if not line or line == "":
             print("** class name missing **")
         elif args[0] not in HBNBCommand.CLASSES:
@@ -144,12 +151,20 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             key = "{}.{}".format(args[0], args[1])
-            if key not in storage.all():
+            if key not in data:
                 print("** no instance found **")
             elif len(args) < 3:
                 print("** attribute name missing **")
             elif len(args) < 4:
                 print("** value missing **")
+            else:
+                obj = data[key]
+                if args[2] in type(obj).__dict__:
+                    a_type = type(obj.__class__.__dict__[args[2]])
+                    setattr(obj, args[2], a_type(args[3]))
+                else:
+                    setattr(obj, args[2], args[3])
+                self.storage.save()
 
 
 if __name__ == '__main__':
